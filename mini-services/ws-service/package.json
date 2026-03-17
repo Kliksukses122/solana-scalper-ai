@@ -1,0 +1,11 @@
+{
+  "name": "ws-trading-service",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "bun run index.ts"
+  },
+  "dependencies": {
+    "socket.io": "^4.7.2"
+  }
+}
