@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { aiEngine } from '@/lib/ai-engine';
-import { fetchTokenData } from '@/lib/market-data';
+import { analyzeToken } from '@/lib/ai-engine';
+import { getTokenData } from '@/lib/market-data';
 
 export async function POST(request: NextRequest) {
   try {
@@ -14,8 +14,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Fetch token data
-    const tokenData = await fetchTokenData(tokenAddress);
+    // Fetch token data from DexScreener
+    const tokenData = await getTokenData(tokenAddress);
     
     if (!tokenData) {
       return NextResponse.json(
@@ -24,50 +24,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Prepare data for AI analysis
-    const marketData = {
-      tokenAddress: tokenData.address,
-      tokenSymbol: tokenData.symbol,
-      tokenName: tokenData.name,
-      logoUrl: tokenData.logoUrl,
-      currentPrice: tokenData.currentPrice,
-      priceChange24h: tokenData.priceChange24h,
-      priceChange7d: tokenData.priceChange24h * 1.5,
-      volume24h: tokenData.volume24h,
-      volumeChange24h: 0,
-      marketCap: tokenData.marketCap,
-      liquidity: tokenData.liquidity,
-      holders: 0,
-      transactions24h: 0,
-      buyPressure: tokenData.buysLast5m + tokenData.sellsLast5m > 0 
-        ? tokenData.buysLast5m / (tokenData.buysLast5m + tokenData.sellsLast5m) 
-        : 0.5,
-      socialMentions: 0,
-      sentiment: tokenData.priceChange24h > 0 ? 0.5 : -0.5,
-      // Scalper metrics
-      priceChange1h: tokenData.priceChange1h,
-      priceChange5m: tokenData.priceChange5m,
-      age: tokenData.age,
-      isNew: tokenData.isNew,
-      pumpScore: tokenData.pumpScore,
-      volumeToMcap: tokenData.volumeToMcap,
-      buysLast5m: tokenData.buysLast5m,
-      sellsLast5m: tokenData.sellsLast5m
-    };
-
     // Run AI analysis
-    const decision = await aiEngine.analyzeToken(marketData);
+    const analysis = await analyzeToken(tokenData);
 
     return NextResponse.json({
       success: true,
       token: {
-        address: tokenData.address,
-        symbol: tokenData.symbol,
-        name: tokenData.name,
-        logoUrl: tokenData.logoUrl,
-        currentPrice: tokenData.currentPrice
+        address: tokenData.baseToken.address,
+        symbol: tokenData.baseToken.symbol,
+        name: tokenData.baseToken.name,
+        priceUsd: tokenData.priceUsd
       },
-      analysis: decision
+      analysis
     });
 
   } catch (error) {
