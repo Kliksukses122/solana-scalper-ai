@@ -1,0 +1,82 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: oklch(0.15 0.01 285);
+  --color-foreground: oklch(0.95 0.01 285);
+  --color-card: oklch(0.18 0.01 285);
+  --color-card-foreground: oklch(0.95 0.01 285);
+  --color-primary: oklch(0.65 0.25 330);
+  --color-primary-foreground: oklch(0.98 0.01 285);
+  --color-secondary: oklch(0.25 0.02 285);
+  --color-secondary-foreground: oklch(0.95 0.01 285);
+  --color-muted: oklch(0.25 0.02 285);
+  --color-muted-foreground: oklch(0.65 0.02 285);
+  --color-accent: oklch(0.55 0.22 165);
+  --color-accent-foreground: oklch(0.98 0.01 285);
+  --color-destructive: oklch(0.55 0.22 25);
+  --color-destructive-foreground: oklch(0.98 0.01 285);
+  --color-border: oklch(0.28 0.02 285);
+  --color-input: oklch(0.22 0.02 285);
+  --color-ring: oklch(0.65 0.25 330);
+  --radius: 0.75rem;
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background: var(--color-background);
+  color: var(--color-foreground);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: oklch(0.15 0.01 285);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: oklch(0.35 0.02 285);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: oklch(0.45 0.02 285);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, oklch(0.65 0.25 330), oklch(0.55 0.22 165));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Gradient border */
+.gradient-border {
+  position: relative;
+  background: linear-gradient(var(--color-card), var(--color-card)) padding-box,
+              linear-gradient(135deg, oklch(0.65 0.25 330), oklch(0.55 0.22 165)) border-box;
+  border: 1px solid transparent;
+}
+
+/* Pulse animation for live indicators */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px oklch(0.55 0.22 165 / 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px oklch(0.55 0.22 165 / 0.8);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
