@@ -1,1 +1,0 @@
-globalThis.__RSC_MANIFEST=(globalThis.__RSC_MANIFEST||{});globalThis.__RSC_MANIFEST["/api/ai/signal/route"]={"moduleLoading":{"prefix":"/_next/"},"ssrModuleMapping":{},"edgeSSRModuleMapping":{},"clientModules":{},"entryCSSFiles":{"/home/z/my-project/src/":[],"/home/z/my-project/src/app/api/ai/signal/route":[]},"rscModuleMapping":{},"edgeRscModuleMapping":{}}
