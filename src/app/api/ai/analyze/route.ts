@@ -8,6 +8,7 @@ export async function GET() {
   return NextResponse.json({
     success: true,
     message: 'AI Analyze API is ready',
+    version: '2.0.0',
     timestamp: new Date().toISOString(),
     usage: 'POST with { "tokenAddress": "SOL_TOKEN_ADDRESS" }'
   });
