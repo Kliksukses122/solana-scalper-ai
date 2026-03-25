@@ -29,9 +29,6 @@ export async function GET(request: NextRequest) {
     // Run the scan
     const result = await autoTrader.scanAndTrade();
 
-    // Also check exit signals (stop-loss/take-profit)
-    await autoTrader.checkExitSignals();
-
     return NextResponse.json({
       success: true,
       result,
@@ -80,7 +77,6 @@ export async function POST(request: NextRequest) {
     if (action === 'scan') {
       // Single scan
       const result = await autoTrader.scanAndTrade();
-      await autoTrader.checkExitSignals();
       return NextResponse.json({
         success: true,
         result,
